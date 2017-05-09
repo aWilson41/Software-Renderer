@@ -7,8 +7,8 @@ class Material
 public:
 	Color diffuse;
 	Color specular;
-   float specularShine;
 	Color ambient;
+    float specularShine;
 	Texture* diffuseMap;
 	bool hasDiffuseMap;
 

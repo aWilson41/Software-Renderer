@@ -43,37 +43,37 @@ void Scene::DrawSceneToBuffer(SoftwareDevice* sDevice)
 				if (shader == Shader::NOSHADER)
 				{
 					if(sampler == Sampler::NOSAMPLE)
-						sDevice->rasterizer.DrawBarySurfaceMesh(&sDevice->screen, &mesh[i], &cam);
+						sDevice->rasterizer.DrawSurfaceMesh(&sDevice->screen, &mesh[i], &cam);
 					else if(sampler == Sampler::POINTSAMPLE && mesh[i].mat->hasDiffuseMap)
-						sDevice->rasterizer.DrawBaryTexturedSurfaceMesh(&sDevice->screen, &mesh[i], cam.GetView(), cam.GetProj());
+						sDevice->rasterizer.DrawTexturedSurfaceMesh(&sDevice->screen, &mesh[i], cam.GetView(), cam.GetProj());
 				}
 				else if (shader == Shader::FLAT)
 				{
 					if (sampler == Sampler::NOSAMPLE)
-						sDevice->rasterizer.DrawBaryFlatMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
+						sDevice->rasterizer.DrawFlatMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
 					else if (sampler == Sampler::POINTSAMPLE && mesh[i].mat->hasDiffuseMap)
-						sDevice->rasterizer.DrawBaryTexturedFlatMesh(&sDevice->screen, &mesh[i], cam.GetView(), cam.GetProj(), MathHelper::ToFloat3(dirLight[0]));
+						sDevice->rasterizer.DrawTexturedFlatMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
 				}
 				else if (shader == Shader::SMOOTH)
 				{
 					if (sampler == Sampler::NOSAMPLE)
-						sDevice->rasterizer.DrawBarySmoothMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
+						sDevice->rasterizer.DrawSmoothMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
 					else if (sampler == Sampler::POINTSAMPLE && mesh[i].mat->hasDiffuseMap)
-						sDevice->rasterizer.DrawBaryTexturedSmoothMesh(&sDevice->screen, &mesh[i], cam.GetView(), cam.GetProj(), MathHelper::ToFloat3(dirLight[0]));
+						sDevice->rasterizer.DrawTexturedSmoothMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
 				}
             else if (shader == Shader::PHONGFLAT)
-               sDevice->rasterizer.DrawBaryPhongFlatMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
+               sDevice->rasterizer.DrawPhongFlatMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
             else if (shader == Shader::PHONGSMOOTH)
-               sDevice->rasterizer.DrawBaryPhongSmoothMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
+               sDevice->rasterizer.DrawPhongSmoothMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
 			}
-         else if (sDevice->rasterizer.rTech == DDA)
+         else if (sDevice->rasterizer.rTech == SCANLINE)
          {
             Shader shader = sDevice->GetShader();
             Sampler sampler = sDevice->GetSampler();
             if(shader == Shader::NOSHADER)
                sDevice->rasterizer.DrawScanlineSurfaceMesh(&sDevice->screen, &mesh[i], cam.GetView(), cam.GetProj());
             else if(shader == Shader::FLAT)
-               sDevice->rasterizer.DrawScanlineFlatMesh(&sDevice->screen, &mesh[i], cam.GetView(), cam.GetProj(), MathHelper::ToFloat3(dirLight[0]));
+               sDevice->rasterizer.DrawScanlineFlatMesh(&sDevice->screen, &mesh[i], &cam, MathHelper::ToFloat3(dirLight[0]));
          }
 		}
 		break;

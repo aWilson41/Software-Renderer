@@ -134,7 +134,7 @@ void App::Update()
 		sDevice.SetTech(RAYTRACE, SMOOTH, POINTSAMPLE);
 
 	if (IsCurrentKeyDown('u'))
-		sDevice.rasterizer.rTech = DDA;
+		sDevice.rasterizer.rTech = SCANLINE;
 	else if (IsCurrentKeyDown('y'))
 		sDevice.rasterizer.rTech = BARYCENTRIC;
 

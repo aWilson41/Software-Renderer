@@ -567,11 +567,13 @@ public:
 	   return a.x * b.x + a.y * b.y;
    }
 
+   // Converts float3 to float4 with w as 1
    static float4 ToFloat4(float3 a)
    {
 	   return float4(a.x, a.y, a.z, 1.0f);
    }
 
+   // Converts float3 to float4 with w as 0
    static float4 ToFloat4w0(float3 a)
    {
 	   return float4(a.x, a.y, a.z, 0.0f);

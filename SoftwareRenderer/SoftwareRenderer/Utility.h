@@ -29,7 +29,7 @@ enum Sampler
 enum RasterizationTechnique
 {
 	BARYCENTRIC,
-	DDA
+	SCANLINE
 };
 
 class Color
@@ -83,8 +83,10 @@ public:
 
 	static float Saturate(float a)
 	{
-		if (a < 0)
-			a = 0;
+        if (a < 0.0f)
+            a = 0.0f;
+        else if (a > 1.0f)
+            a = 1.0f;
 
 		return a;
 	}
@@ -115,9 +117,9 @@ public:
 		{
 			for (UINT x = 0; x < width; x++)
 			{
-				convertedImage[4 * (width * y + x)] = image[3 * (width * (height - y - 1) + x)];
-				convertedImage[4 * (width * y + x) + 1] = image[3 * (width * (height - y - 1) + x) + 1];
-				convertedImage[4 * (width * y + x) + 2] = image[3 * (width * (height - y - 1) + x) + 2];
+				convertedImage[4 * (width * y + x)] = image[3 * (width * (height - y - 1) + x)] - 50;
+				convertedImage[4 * (width * y + x) + 1] = image[3 * (width * (height - y - 1) + x) + 1] - 50;
+				convertedImage[4 * (width * y + x) + 2] = image[3 * (width * (height - y - 1) + x) + 2] - 50;
 				convertedImage[4 * (width * y + x) + 3] = 255;
 			}
 		}
