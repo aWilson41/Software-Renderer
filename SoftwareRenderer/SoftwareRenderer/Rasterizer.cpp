@@ -456,76 +456,76 @@ void Rasterizer::DrawTriangle(Screen* screen, Triangle3 triangle, Color color1, 
 
 void Rasterizer::DrawTriangle(Screen* screen, Triangle3 triangle, Texture* tex, float2 texCoord1, float2 texCoord2, float2 texCoord3)
 {
-	// Find the extrema
-	float maxX = triangle.p1.x;
-	float minX = triangle.p1.x;
-	float maxY = triangle.p1.y;
-	float minY = triangle.p1.y;
+    // Find the extrema
+    float maxX = triangle.p1.x;
+    float minX = triangle.p1.x;
+    float maxY = triangle.p1.y;
+    float minY = triangle.p1.y;
 
-	// MaxX
-	if (triangle.p2.x > maxX)
-		maxX = triangle.p2.x;
-	if (triangle.p3.x > maxX)
-		maxX = triangle.p3.x;
+    // MaxX
+    if (triangle.p2.x > maxX)
+        maxX = triangle.p2.x;
+    if (triangle.p3.x > maxX)
+        maxX = triangle.p3.x;
 
-	// MinX
-	if (triangle.p2.x < minX)
-		minX = triangle.p2.x;
-	if (triangle.p3.x < minX)
-		minX = triangle.p3.x;
+    // MinX
+    if (triangle.p2.x < minX)
+        minX = triangle.p2.x;
+    if (triangle.p3.x < minX)
+        minX = triangle.p3.x;
 
-	// MaxY
-	if (triangle.p2.y > maxY)
-		maxY = triangle.p2.y;
-	if (triangle.p3.y > maxY)
-		maxY = triangle.p3.y;
+    // MaxY
+    if (triangle.p2.y > maxY)
+        maxY = triangle.p2.y;
+    if (triangle.p3.y > maxY)
+        maxY = triangle.p3.y;
 
-	// MinY
-	if (triangle.p2.y < minY)
-		minY = triangle.p2.y;
-	if (triangle.p3.y < minY)
-		minY = triangle.p3.y;
+    // MinY
+    if (triangle.p2.y < minY)
+        minY = triangle.p2.y;
+    if (triangle.p3.y < minY)
+        minY = triangle.p3.y;
 
-	float2 p1 = MathHelper::ToFloat2(triangle.p1);
-	float2 v0 = MathHelper::ToFloat2(triangle.p2) - p1;
-	float2 v1 = MathHelper::ToFloat2(triangle.p3) - p1;
+    float2 p1 = MathHelper::ToFloat2(triangle.p1);
+    float2 v0 = MathHelper::ToFloat2(triangle.p2) - p1;
+    float2 v1 = MathHelper::ToFloat2(triangle.p3) - p1;
 
-	float d00 = MathHelper::Dot(v0, v0);
-	float d01 = MathHelper::Dot(v0, v1);
-	float d11 = MathHelper::Dot(v1, v1);
-	float denom = d00 * d11 - d01 * d01;
+    float d00 = MathHelper::Dot(v0, v0);
+    float d01 = MathHelper::Dot(v0, v1);
+    float d11 = MathHelper::Dot(v1, v1);
+    float denom = d00 * d11 - d01 * d01;
 
-	for (int x = (int)minX; x <= (int)maxX; x++)
-	{
-		for (int y = (int)minY; y <= (int)maxY; y++)
-		{
-			float2 v2 = float2((float)x, (float)y) - p1;
-			float d20 = MathHelper::Dot(v2, v0);
-			float d21 = MathHelper::Dot(v2, v1);
+    for (int x = (int)minX; x <= (int)maxX; x++)
+    {
+        for (int y = (int)minY; y <= (int)maxY; y++)
+        {
+            float2 v2 = float2((float)x, (float)y) - p1;
+            float d20 = MathHelper::Dot(v2, v0);
+            float d21 = MathHelper::Dot(v2, v1);
 
-			float v = (d11 * d20 - d01 * d21) / denom;
-			float w = (d00 * d21 - d01 * d20) / denom;
-			float u = 1.0f - v - w;
+            float v = (d11 * d20 - d01 * d21) / denom;
+            float w = (d00 * d21 - d01 * d20) / denom;
+            float u = 1.0f - v - w;
 
-			// Find the z value and check the bounds
-			if (u >= 0 && v >= 0 && w >= 0 && x >= 0 && y >= 0 && x < (int)screen->GetScreenWidth() && y < (int)screen->GetScreenHeight())
-			{
-				// Interpolate z value
-				float zInv = triangle.p1.z * u + triangle.p2.z * v + triangle.p3.z * w;
-				float z = 1 / zInv;
+            // Find the z value and check the bounds
+            if (u >= 0 && v >= 0 && w >= 0 && x >= 0 && y >= 0 && x < (int)screen->GetScreenWidth() && y < (int)screen->GetScreenHeight())
+            {
+                // Interpolate z value
+                float zInv = triangle.p1.z * u + triangle.p2.z * v + triangle.p3.z * w;
+                float z = 1 / zInv;
 
-				int i = (int)Utility::Index2DTo1D(x, y, screen->GetScreenWidth());
-				// Depth test
-				if (z < screen->GetZ(i))
-				{
-               float2 texCoord = (texCoord1 * u + texCoord2 * v + texCoord3 * w) / zInv;
-               texCoord.x = fmod(texCoord.x + (float)tex->width * 8.0f, (float)tex->width);
-               texCoord.y = fmod(texCoord.y + (float)tex->height * 8.0f, (float)tex->height);
-					screen->SetPixelZ(i, z, tex->GetPixel((int)texCoord.x, (int)texCoord.y));
-				}
-			}
-		}
-	}
+                int i = Utility::Index2DTo1D(x, y, screen->GetScreenWidth());
+                // Depth test
+                if (z < screen->GetZ(i))
+                {
+                    float2 texCoord = (texCoord1 * u + texCoord2 * v + texCoord3 * w) / zInv;
+                    texCoord.x = fmod(texCoord.x + (float)tex->width * 8.0f, (float)tex->width);
+                    texCoord.y = fmod(texCoord.y + (float)tex->height * 8.0f, (float)tex->height);
+                    screen->SetPixelZ(i, z, tex->GetPixel((int)texCoord.x, (int)texCoord.y));
+                }
+            }
+        }
+    }
 }
 
 void Rasterizer::DrawTriangle(Screen* screen, Triangle3 triangle, Texture* tex, float2 texCoord1, float2 texCoord2, float2 texCoord3, float diff)

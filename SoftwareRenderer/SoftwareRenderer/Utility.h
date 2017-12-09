@@ -132,4 +132,24 @@ public:
 		else
 			return true;
 	}
+
+    //static Color sampleBilinear(Texture* tex, float2 pos)
+    //{
+    //    // We first select the 4 nearest neighbors
+    //    int xFloor = (int)pos.x;
+    //    int yFloor = (int)pos.y;
+    //    int xCeil = ceil(pos.x);
+    //    int yCeil = ceil(pos.y);
+    //    Color col1 = tex->GetPixel(xFloor, yFloor);
+    //    Color col2 = tex->GetPixel(xFloor, yCeil);
+    //    Color col3 = tex->GetPixel(xCeil, yFloor);
+    //    Color col4 = tex->GetPixel(xCeil, yCeil);
+
+    //    
+    //}
+
+    //static Color sampleTrilinear()
+    //{
+
+    //}
 };
