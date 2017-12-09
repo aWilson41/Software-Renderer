@@ -29,6 +29,6 @@ public:
 private:
 	UINT mScreenWidth;
 	UINT mScreenHeight;
-	unsigned char* mBuffer;
-	float* mZBuffer;
+	unsigned char* mBuffer = nullptr;
+	float* mZBuffer = nullptr;
 };

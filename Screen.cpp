@@ -116,9 +116,9 @@ void Screen::SetSquare(int x, int y, Color color, UINT size)
 
 void Screen::SetDim(UINT width, UINT height)
 {
-	if (mBuffer)
+	if (mBuffer != nullptr)
 		delete[] mBuffer;
-	if (mZBuffer)
+	if (mZBuffer != nullptr)
 		delete[] mZBuffer;
 
 	mScreenWidth = width;

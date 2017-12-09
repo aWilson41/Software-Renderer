@@ -10,7 +10,6 @@ int main(int argc, char* argv[])
 	engine.EngineInitialize();
 	engine.EngineLoad();
 
-
 	// Main game loop
 	SDL_Event e;
 	while (engine.IsRunning())
@@ -29,7 +28,7 @@ int main(int argc, char* argv[])
 			// Call input to notify
 			engine.Input(e);
 			if (e.type == SDL_QUIT)
-			engine.Quit();
+				engine.Quit();
 		}
 
 		// Return control to programmer for implementation
@@ -127,7 +126,7 @@ void Engine::Input(SDL_Event e)
 
 inline void Engine::PushKeyState()
 {
-   // Put previousKeyState in currentKeyState
+	// Put previousKeyState in currentKeyState
 	memcpy(&mPreviousKeyState, mCurrentKeyState, INPUT_SIZE);
 }
 
@@ -136,9 +135,9 @@ void Engine::EngineUnLoad()
 {
    // Cleanup and Quit
 	UnLoad();
-	SDL_DestroyWindow(mWindow);
-	SDL_DestroyRenderer(mRenderer);
 	SDL_DestroyTexture(mTexture);
+	SDL_DestroyRenderer(mRenderer);
+	SDL_DestroyWindow(mWindow);
 }
 
 // Virtual Method Implemented in App
