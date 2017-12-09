@@ -8,3 +8,11 @@ To rotate the object viewed you can use wasd.
 To move the camera you can use ijkl.
 To switch between scanline and barycentric triangle filling press U/Y.
 To export a png image of the current results press m.
+
+![alt text](https://andaharoo.files.wordpress.com/2016/10/output1.png?w=1400&h=)
+
+![alt text](https://andaharoo.files.wordpress.com/2016/10/monte-carlo1.png?w=1000&h=)
+
+![alt text](https://andaharoo.files.wordpress.com/2016/10/luxoseries.png?w=1400&h=)
+
+![alt text](https://andaharoo.files.wordpress.com/2016/10/hiccupseries.png?w=1400&h=)
