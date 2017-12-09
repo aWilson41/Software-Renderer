@@ -59,6 +59,13 @@ Engine::Engine() : mRunning(true), fTime(0.0f), prevTime(0), currTime(0)
 
 	mRenderer = SDL_CreateRenderer(mWindow, -1, SDL_RENDERER_SOFTWARE);
 	mTexture = SDL_CreateTexture(mRenderer, SDL_PIXELFORMAT_RGB24, SDL_TEXTUREACCESS_STREAMING, sDevice.screen.GetScreenWidth(), sDevice.screen.GetScreenHeight());
+
+	// Initialize the array to false
+	for (unsigned int i = 0; i < INPUT_SIZE; i++)
+	{
+		mCurrentKeyState[i] = false;
+		mPreviousKeyState[i] = false;
+	}
 }
 
 Engine::~Engine()
